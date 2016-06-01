@@ -1,15 +1,14 @@
-sqLen = 10;
-
-$(document).ready(function(){
-	createSketchpad();
+$(document).ready(function() {
+	createSketchpad(10);
 	$('#container .row').on('mouseenter', '.square', function(){
 		currentColor = $(this).css('background-color');
-		console.log(rgb2hex(currentColor));
 		updateColor(this, rgb2hex(currentColor))
 	});
+
+	$('button').on('click', clear);
 });
 
-function createSketchpad () {
+function createSketchpad (sqLen) {
 	for (var i=0; i < sqLen; i++){
 		$('#container').append("<div id='"+(i+1)+"' class='row'>");
 
@@ -58,4 +57,10 @@ function updateColor(square, currentColor) {
 			break;
 		default:
 	}
+};
+
+function clear() {
+	$('.square').remove();
+	var num = prompt("Enter the number of squares per side: ", 10);
+	createSketchpad(num);
 };
