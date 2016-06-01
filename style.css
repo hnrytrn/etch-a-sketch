@@ -1,0 +1,30 @@
+#container {
+	height: 500px;
+	width: 500px;
+	margin: 10px auto;
+	padding: 0;
+}
+
+.square {
+	display: inline-block;
+	background-color: #ececec;
+	margin: 0;
+	padding: 0;
+	height: 50px;
+	width: 50px;
+}
+
+.row {
+	display: block;
+	width: 500px;
+	height: 50px;
+}
+
+button {
+	position: relative;
+	left: 50%;
+}
+
+h1 {
+	text-align: center;
+}
