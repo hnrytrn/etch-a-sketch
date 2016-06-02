@@ -1,32 +1,40 @@
 $(document).ready(function() {
-	createSketchpad(10);
-	$('#container .row').on('mouseenter', '.square', function(){
-		currentColor = $(this).css('background-color');
-		updateColor(this, rgb2hex(currentColor))
-	});
+	createSketchpad(16);
 
 	$('button').on('click', clear);
+
+	$('#container').on('mouseenter', '.square', function(){
+		currentColor = $(this).css('background-color');
+		updateColor(this, currentColor)
+	});
 });
 
-function createSketchpad (sqLen) {
-	for (var i=0; i < sqLen; i++){
-		$('#container').append("<div id='"+(i+1)+"' class='row'>");
+function createSketchpad (sqNum) {
+	var $container = $('#container');
+	for (var i=0; i < sqNum; i++){
+		$container.append("<div id='"+i+"' class='row'>");
 
-		for (var j=0; j < sqLen; j++){
-			$("#" + i).append('<div class="square"><div>');
+		var $row = $('#'+i);
+		for (var j=0; j < sqNum; j++){
+			$row.append('<span><div class="square"></span>');
 		}
 	}
+	var sqLen = 512/sqNum;
+	$('.square').css("width", sqLen);
+	$(".square, .row").css("height", sqLen);
 };
 
-function rgb2hex(rgb) {
-    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-    function hex(x) {
-        return ("0" + parseInt(x).toString(16)).slice(-2);
-    }
-    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
-}
-
 function updateColor(square, currentColor) {
+	if (currentColor === "rgb(255, 255, 255)") {
+		var r = parseInt((Math.random() * 256));
+		var g = parseInt((Math.random() * 256));
+		var b = parseInt((Math.random() * 256));
+		console.log(r+", "+g+", "+b)
+		$(square).css("background-color", "rgb("+r+","+g+","+b+")");
+	} else {
+		$(square).css("opacity", "-=0.1");
+	}
+	/*
 	switch (currentColor) {
 		case '#e5e5e5':
 			$(square).css("background-color", "#cccccc");
@@ -57,10 +65,12 @@ function updateColor(square, currentColor) {
 			break;
 		default:
 	}
+	*/
 };
 
 function clear() {
 	$('.square').remove();
-	var num = prompt("Enter the number of squares per side: ", 10);
+	$('.row').remove();
+	var num = prompt("Cleared! Enter the number of squares per side (1-64): ", 16);
 	createSketchpad(num);
 };
